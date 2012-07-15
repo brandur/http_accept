@@ -8,8 +8,8 @@ module HTTPAccept
       content = @content.gsub(/\AAccept:\s*/, '')
       content.split(',').map { |s| s.strip }.map do |segment|
         format, params = parse_params(segment)
-        { :format => format, :params => params }
-      end
+        MediaType.new(:format => format, :params => params)
+      end.sort
     end
 
     private
