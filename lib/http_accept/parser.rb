@@ -16,7 +16,7 @@ module HTTPAccept
 
     def parse_params(segment)
       format, *params = segment.split(";")
-      params = Hash[*params.map { |p| p.scan(/(\w)+=([\w.]+)/) }.flatten]
+      params = Hash[*params.map { |p| p.scan(/(\w+)=([\w.]+)/) }.flatten]
       return [format, params]
     end
   end
