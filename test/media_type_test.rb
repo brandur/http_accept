@@ -13,6 +13,8 @@ module HTTPAccept
       end
 
       it "detects when a media type is more specific than another" do
+        MediaType.new(:format => "application/*").must_be :<,
+          MediaType.new(:format => "text/plain", :params => { "q" => "0.8" })
         MediaType.new(:format => "application/json",
           :params => { "level" => 2 }).must_be :<,
           MediaType.new(:format => "application/*")
@@ -23,6 +25,8 @@ module HTTPAccept
       end
 
       it "detects when a media type is less specific than another" do
+        MediaType.new(:format => "text/plain", :params => { "q" => "0.8" }).must_be :>,
+          MediaType.new(:format => "application/*")
         MediaType.new(:format => "application/*").must_be :>,
           MediaType.new(:format => "application/json",
             :params => { "level" => 2 })

@@ -12,9 +12,15 @@ module HTTPAccept
     def <=>(other)
       # return -1 if more specific than other, so we end up at the front of the
       # array
-      if !all_subtypes? && other.all_subtypes? || !all_types? && other.all_types?
+      if q > other.q
         -1
-      elsif all_subtypes? && !other.all_subtypes? || all_types? && !other.all_types?
+      elsif q < other.q 
+        1
+      elsif !all_subtypes? && other.all_subtypes? ||
+        !all_types? && other.all_types?
+        -1
+      elsif all_subtypes? && !other.all_subtypes? ||
+        all_types? && !other.all_types?
         1
       elsif params.count == other.params.count
         0
@@ -31,6 +37,10 @@ module HTTPAccept
 
     def all_types?
       format == "*/*"
+    end
+
+    def q
+      params["q"] ? params["q"].to_f : 1.0
     end
 
     def to_h
