@@ -41,5 +41,30 @@ module HTTPAccept
           "*/*",
         ]
     end
+
+    it "parses a real world accept header" do
+      accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      Parser.new(accept).run.map(&:to_s).must_equal [
+        "text/html",
+        "application/xhtml+xml",
+        "application/xml; q=0.9",
+        "*/*; q=0.8",
+      ]
+    end
+
+    it "parses a broken accept header" do
+      accept = "text/xml,application/xml,application/xhtml+xml," +
+        "text/html;q=0.9,text/plain;q=0.8,image/*,,*/*;q=0.5"
+
+      Parser.new(accept).run.map(&:to_s).must_equal [
+        "text/xml",
+        "application/xml",
+        "application/xhtml+xml",
+        "image/*",
+        "text/html; q=0.9",
+        "text/plain; q=0.8",
+        "*/*; q=0.5"
+      ]
+    end
   end
 end
