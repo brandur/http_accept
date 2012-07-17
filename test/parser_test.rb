@@ -17,6 +17,13 @@ module HTTPAccept
       ]
     end
 
+    it "parses media type parameters containing quotes" do
+      Parser.new('audio/*; q="0.2"').run.map(&:to_s).must_equal \
+        ["audio/*; q=0.2"]
+      Parser.new("audio/*; q='0.2'").run.map(&:to_s).must_equal \
+        ["audio/*; q=0.2"]
+    end
+
     it "parses a more elaborate accept header" do
       Parser.new("text/*, text/html, text/html;level=1, */*").
         run.map(&:to_s).must_equal [
