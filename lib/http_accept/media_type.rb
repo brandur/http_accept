@@ -32,7 +32,7 @@ module HTTPAccept
     end
 
     def all_subtypes?
-      format.match(/\/\*/, format.length-2) != nil
+      format.match(/\/\*\Z/) != nil
     end
 
     def all_types?
