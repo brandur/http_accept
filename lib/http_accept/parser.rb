@@ -8,9 +8,10 @@ module HTTPAccept
       return [] unless @content
       content = @content.gsub(/\AAccept:\s*/, '')
       content.split(',').map { |s| s.strip }.map do |segment|
+        next nil if segment.empty?
         format, params = parse_params(segment)
         MediaType.new(:format => format, :params => params)
-      end.sort
+      end.compact.sort
     end
 
     private
