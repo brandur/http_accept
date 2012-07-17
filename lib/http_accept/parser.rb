@@ -5,6 +5,7 @@ module HTTPAccept
     end
 
     def run
+      return [] unless @content
       content = @content.gsub(/\AAccept:\s*/, '')
       content.split(',').map { |s| s.strip }.map do |segment|
         format, params = parse_params(segment)

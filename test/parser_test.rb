@@ -2,6 +2,14 @@ require "test_helper"
 
 module HTTPAccept
   describe Parser do
+    it "parses a nil field" do
+      Parser.new(nil).run.must_equal []
+    end
+
+    it "parses an empty field" do
+      Parser.new("").run.must_equal []
+    end
+
     it "parses a simple accept header" do
       Parser.new("audio/*").run.map(&:to_s).must_equal [ "audio/*" ]
     end
