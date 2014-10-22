@@ -16,7 +16,7 @@ module HTTPAccept
 
     private
 
-    PARAM_PATTERN = /((\w+)\s*=\s*'([\w.]+)'|(\w+)\s*=\s*"?([\w.]+)"?)/
+    PARAM_PATTERN = /((\w+)\s*=\s*'([\w.\-_]+)'|(\w+)\s*=\s*"?([\w.\-_]+)"?)/
 
     def parse_params(segment)
       format, *params = segment.split(";")
